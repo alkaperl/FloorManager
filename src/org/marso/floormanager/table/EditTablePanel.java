@@ -1,4 +1,4 @@
-package org.marso.floormanager;
+package org.marso.floormanager.table;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,6 +26,8 @@ import com.floreantpos.model.ShopTableType;
 import com.floreantpos.model.dao.ShopTableDAO;
 import com.floreantpos.swing.BeanTableModel;
 import com.floreantpos.ui.BeanEditor;
+import com.floreantpos.ui.dialog.POSMessageDialog;
+import com.floreantpos.util.POSUtil;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -37,7 +40,8 @@ public class EditTablePanel  extends JPanel implements ActionListener, ListSelec
 	private JXTable browserTable = new JXTable();
 	private BeanTableModel<ShopTable> tableModel = new BeanTableModel<ShopTable>(ShopTable.class);
 	private BeanEditor beanEditor = new EditTableForm();
-
+	private int selectedRowIndex = -1;
+	private int selectedRowId = -1;
 	
 	public EditTablePanel() {
 		this.setName("EditFloorPanel");
@@ -70,6 +74,15 @@ public class EditTablePanel  extends JPanel implements ActionListener, ListSelec
 //			browserPanel.add(searchPanel, BorderLayout.NORTH);
 //		}
 		browserPanel.add(new JScrollPane(browserTable));
+		
+		JPanel buttonPanelLeft = new JPanel();
+		JButton btnDelete = new JButton( "DELETE" ); //$NON-NLS-1$	
+		JButton btnDuplicate = new JButton( "DUPLICATE" ); //$NON-NLS-1$
+		JButton btnDeleteAll = new JButton( "DELETE ALL" ); //$NON-NLS-1$
+		buttonPanelLeft.add(btnDelete);
+		buttonPanelLeft.add(btnDuplicate);
+		buttonPanelLeft.add(btnDeleteAll);	
+		browserPanel.add(buttonPanelLeft, BorderLayout.SOUTH);
 		add(browserPanel);
 
 		JPanel beanEditorPanel = new JPanel(new MigLayout()); //$NON-NLS-1$
@@ -80,22 +93,13 @@ public class EditTablePanel  extends JPanel implements ActionListener, ListSelec
 
 		JPanel buttonPanel = new JPanel();
 
-		//TODO: ADD messages.properties
-		JButton btnNew = new JButton( "NEW" ); //$NON-NLS-1$
-		JButton btnEdit = new JButton( "EDIT" ); //$NON-NLS-1$
-		JButton btnSave = new JButton( "SAVE" ); //$NON-NLS-1$
-		JButton btnDuplicate = new JButton( "DUPLICATE" ); //$NON-NLS-1$
-		JButton btnDeleteAll = new JButton( "DELETE ALL" ); //$NON-NLS-1$
-		JButton btnDelete = new JButton( "DELETE" ); //$NON-NLS-1$
-		JButton btnCancel = new JButton( "CANCEL" ); //$NON-NLS-1$			
-
+		//TODO: ADD messages.properties		
+		JButton btnNew = new JButton( "NEW" ); //$NON-NLS-1$		
+		JButton btnSave = new JButton( "SAVE" ); //$NON-NLS-1$		
+		JButton btnCancel = new JButton( "CANCEL CHANGES" ); //$NON-NLS-1$		
 		buttonPanel.add(btnNew);
-		buttonPanel.add(btnEdit);
 		buttonPanel.add(btnSave);
-		buttonPanel.add(btnDelete);
 		buttonPanel.add(btnCancel);			
-		buttonPanel.add(btnDuplicate);
-		buttonPanel.add(btnDeleteAll);
 		
 		beanPanel.setPreferredSize(new Dimension(600, 400));
 		beanPanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -103,9 +107,8 @@ public class EditTablePanel  extends JPanel implements ActionListener, ListSelec
 		add(beanPanel, BorderLayout.EAST);
 
 		btnNew.addActionListener(this);
-		btnEdit.addActionListener(this);
 		btnSave.addActionListener(this);
-		btnSave.addActionListener(this);
+		btnDelete.addActionListener(this);
 		btnCancel.addActionListener(this);		
 		btnDuplicate.addActionListener(this);
 		btnDeleteAll.addActionListener(this);			
@@ -121,12 +124,25 @@ public class EditTablePanel  extends JPanel implements ActionListener, ListSelec
 		List<ShopTable> tables = ShopTableDAO.getInstance().findAll();
 		tableModel = (BeanTableModel) browserTable.getModel();
 		tableModel.removeAll();
-		tableModel.addRows(tables);
+		tableModel.addRows( tables );
+		beanEditor.setFieldsEnable( false );
 	}	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {		
-		System.out.println("EditTablePanel.actionPerformed():"+e.getActionCommand()+":");
+		JButton b = (JButton) e.getSource();
+		System.out.println("EditTablePanel.actionPerformed():"+b.getText()+":");		
+		if( b.getText().equals( "DELETE" ) && selectedRowId > -1 ){
+			int option = POSMessageDialog.showYesNoQuestionDialog(POSUtil.getBackOfficeWindow(),
+					Messages.getString("ShopTableForm.14"), Messages.getString("ShopTableForm.15")); //$NON-NLS-1$ //$NON-NLS-2$
+			if (option == JOptionPane.YES_OPTION) {	
+				beanEditor.delete();
+				refreshTables();
+			}
+		} else if( b.getText().equals( "SAVE" ) && selectedRowId > -1 ){
+			beanEditor.save();
+			refreshTables();
+		}
 	}
 	
 	@Override
@@ -135,17 +151,17 @@ public class EditTablePanel  extends JPanel implements ActionListener, ListSelec
 		
 		if ( !e.getValueIsAdjusting()) {
 			BeanTableModel model = (BeanTableModel) browserTable.getModel();
-			int selectedRow = browserTable.getSelectedRow();
-			if (selectedRow > -1) {
-				System.out.println("EditTablePanel.valueChanged():selectedRow:"+selectedRow+":");
+			selectedRowIndex = browserTable.getSelectedRow();
+			if (selectedRowIndex > -1) {
+				System.out.println("EditTablePanel.valueChanged():selectedRow:"+selectedRowIndex+":");
 
-				selectedRow = browserTable.convertRowIndexToModel(selectedRow);
-				System.out.println("EditTablePanel.valueChanged():selectedRow.C:"+selectedRow+":");
+				selectedRowId = browserTable.convertRowIndexToModel(selectedRowIndex);
+				System.out.println("EditTablePanel.valueChanged():selectedRow.C:"+selectedRowId+":");
 
-				if (selectedRow > -1){
-					System.out.println("EditTablePanel.valueChanged():selectedRow.C.if:"+selectedRow+":");
+				if (selectedRowId > -1){
+					System.out.println("EditTablePanel.valueChanged():selectedRow.C.if:"+selectedRowId+":");
 
-					ShopTable data = (ShopTable) model.getRow(selectedRow);
+					ShopTable data = (ShopTable) model.getRow(selectedRowId);
 					beanEditor.setBean(data);
 //		btnNew.setEnabled(true);
 //		btnEdit.setEnabled(true);

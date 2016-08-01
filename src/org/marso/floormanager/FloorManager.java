@@ -4,6 +4,10 @@ import java.util.List;
 
 import javax.swing.JMenu;
 
+import org.marso.floormanager.floor.EditFloorAction;
+import org.marso.floormanager.table.EditTableAction;
+import org.marso.floormanager.tabletype.EditTableTypeAction;
+
 import com.floreantpos.actions.PosAction;
 import com.floreantpos.bo.ui.BackOfficeWindow;
 import com.floreantpos.config.ui.ConfigurationDialog;
@@ -55,7 +59,7 @@ public class FloorManager implements FloorLayoutPlugin {
 		JMenu floorManagerMenu = new JMenu("Floor Manager");
 		floorManagerMenu.add(new EditFloorAction());
 		floorManagerMenu.add(new EditTableAction());
-		//floorManagerMenu.add(new ShowTableBrowserAction());
+		floorManagerMenu.add(new EditTableTypeAction());
 		
 		backOfficeWindow.getBackOfficeMenuBar().remove(backOfficeWindow.getBackOfficeMenuBar().getComponentCount() -1);
 		backOfficeWindow.getBackOfficeMenuBar().add(floorManagerMenu);
