@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Built-By: komarios
+Build-Jdk: 1.8.0_91
+Created-By: Eclipse 
+Archiver-Version: Java jar archiver
+
