@@ -7,7 +7,6 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -26,8 +25,6 @@ import com.floreantpos.swing.CheckBoxList;
 import com.floreantpos.swing.FixedLengthTextField;
 import com.floreantpos.swing.IntegerTextField;
 import com.floreantpos.ui.BeanEditor;
-import com.floreantpos.ui.dialog.POSMessageDialog;
-import com.floreantpos.util.POSUtil;
 
 import net.miginfocom.swing.MigLayout;
 
