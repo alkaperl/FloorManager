@@ -94,7 +94,9 @@ public class EditTableForm extends BeanEditor<ShopTable> {
 
 	@Override
 	public void createNew() {
-		setBean( businessLogic.createNew( tfTableNo ) );
+		ShopTable newShopTable = businessLogic.createNew();
+		setBean( newShopTable );
+		tfTableNo.setText( newShopTable.getName() );
 		editTableFormCapacityButtons.setTableCapacity("4");//$NON-NLS-1$
 		tfTableDescription.setText(""); //$NON-NLS-1$
 		tfTableName.setText(""); //$NON-NLS-1$
@@ -126,6 +128,7 @@ public class EditTableForm extends BeanEditor<ShopTable> {
 				ShopTable table = (ShopTable) getBean();
 				ShopTableDAO.getInstance().saveOrUpdate(table);
 				updateView();
+				System.out.println("save:END");				
 				result =  true;
 			}
 		} catch (IllegalModelStateException e) {
@@ -149,13 +152,13 @@ public class EditTableForm extends BeanEditor<ShopTable> {
 			rbFree.setSelected(true);
 			rbDisable.setSelected(table.isDisable());
 			setBorder(BorderFactory.createTitledBorder(Messages.getString("ShopTableForm.56"))); //$NON-NLS-1$
+			System.out.println("updateView:END");				
 		}
 	}
 
 	@Override
 	protected boolean updateModel() throws IllegalModelStateException {
 		ShopTable table = (ShopTable) getBean();
-
 		if (table == null) {
 			table = new ShopTable();
 			setBean(table, false);
@@ -182,6 +185,8 @@ public class EditTableForm extends BeanEditor<ShopTable> {
 		table.setDirty(false);
 		table.setFree( rbFree.isSelected() );
 		table.setDisable( rbDisable.isSelected() );
+		setBean( table, false );
+		System.out.println("updateModel:END");
 
 		return true;
 	}

@@ -19,22 +19,19 @@ public class EditTableBusinessLogic {
 		
 	}
 	
-	public ShopTable createNew(IntegerTextField tfTableNo) {
+	public ShopTable createNew() {
 		ShopTable bean2 = new ShopTable();
-
 		int nxtTableNumber = ShopTableDAO.getInstance().getNextTableNumber();
 		if (nxtTableNumber == 0) {
 			nxtTableNumber = 1;
 		}
-
 		for (int i = 1; i <= nxtTableNumber + 1; i++) {
 			ShopTable shopTable = ShopTableDAO.getInstance().get(i);
 			if (shopTable == null) {
-				tfTableNo.setText(String.valueOf(i));
+				bean2.setName( String.valueOf( i ) );
 				break;
 			}
-		}
-		
+		}		
 		return bean2;
 	}
 

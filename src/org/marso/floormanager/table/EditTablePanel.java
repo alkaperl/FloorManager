@@ -38,7 +38,7 @@ public class EditTablePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	protected JXTable browserTable = new JXTable();
 	private BeanTableModel<ShopTable> tableModel = new BeanTableModel<ShopTable>(ShopTable.class);
-	protected BeanEditor beanEditor = new EditTableForm();
+	protected EditTableForm beanEditor = new EditTableForm();
 	protected int selectedRowIndex = -1;
 	protected int selectedRowId = -1;
 	private EditTablePanelListeners listeners;
@@ -48,7 +48,7 @@ public class EditTablePanel extends JPanel {
 	protected JButton btnDeleteAll = new JButton( "DELETE ALL" ); //$NON-NLS-1$	
 	protected JButton btnNew = new JButton( "NEW" ); //$NON-NLS-1$		
 	protected JButton btnSave = new JButton( "SAVE" ); //$NON-NLS-1$		
-	protected JButton btnCancel = new JButton( "CANCEL CHANGES" ); //$NON-NLS-1$		
+	protected JButton btnCancel = new JButton( "CLEAR CHANGES" ); //$NON-NLS-1$		
 	
 	public EditTablePanel() {
 		this.setName("EditFloorPanel");

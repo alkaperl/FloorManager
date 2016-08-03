@@ -30,9 +30,27 @@ public class EditTablePanelListeners implements ActionListener, ListSelectionLis
 			if (option == JOptionPane.YES_OPTION) {	
 				editTablePanel.beanEditor.delete();
 				editTablePanel.refreshTables();
+				editTablePanel.beanEditor.clearFields();
 			}
 		} else if( b.getText().equals( "SAVE" ) && editTablePanel.selectedRowId > -1 ){
 			editTablePanel.beanEditor.save();
+			editTablePanel.refreshTables();
+			editTablePanel.beanEditor.clearFields();
+		} else if( b.getText().equals( "SAVE" ) && editTablePanel.selectedRowId < 0 && editTablePanel.beanEditor.getBean() != null ){
+			editTablePanel.beanEditor.save();
+			editTablePanel.refreshTables();
+			editTablePanel.beanEditor.clearFields();
+		} else if( b.getText().equals( "NEW" ) ){
+			editTablePanel.beanEditor.clearFields();
+			editTablePanel.refreshTables();
+			editTablePanel.beanEditor.createNew();	
+			editTablePanel.beanEditor.setFieldsEnable( true );
+		} else if( b.getText().equals( "DELETE ALL" ) ){
+			editTablePanel.beanEditor.clearFields();
+			editTablePanel.beanEditor.deleteAllTables();
+			editTablePanel.refreshTables();
+		} else if( b.getText().equals( "CLEAR CHANGES" ) ){
+			editTablePanel.beanEditor.clearFields();
 			editTablePanel.refreshTables();
 		}
 	}
