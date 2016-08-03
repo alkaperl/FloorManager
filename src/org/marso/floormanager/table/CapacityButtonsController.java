@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import com.floreantpos.swing.IntegerTextField;
 import com.floreantpos.swing.PosButton;
 
-public class TableFormCapacityButtons implements ActionListener {
+public class CapacityButtonsController implements ActionListener {
 	private IntegerTextField tfTableCapacity = new IntegerTextField(6);
 	private JButton btnCapacityOne 	= new PosButton("1"); //$NON-NLS-1$
 	private JButton btnCapacityTwo 	= new PosButton("2"); //$NON-NLS-1$
@@ -19,7 +19,7 @@ public class TableFormCapacityButtons implements ActionListener {
 	private JButton btnCapacityEight= new PosButton("8"); //$NON-NLS-1$
 	private JButton btnCapacityTen 	= new PosButton("10"); //$NON-NLS-1$
 	
-	public TableFormCapacityButtons(JPanel tableForm){
+	public CapacityButtonsController(JPanel tableForm){
 		tableForm.add(tfTableCapacity, "flowx,grow,cell 1 3"); //$NON-NLS-1$
 		
 		btnCapacityOne.setPreferredSize(	new Dimension(52, 52));

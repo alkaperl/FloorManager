@@ -30,10 +30,10 @@ public class TablePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	protected JXTable browserTable = new JXTable();
 	private BeanTableModel<ShopTable> tableModel = new BeanTableModel<ShopTable>(ShopTable.class);
-	protected TableForm beanEditor = new TableForm();
+	protected TableForm beanEditor;
 	protected int selectedRowIndex = -1;
 	protected int selectedRowId = -1;
-	private TablePanelListeners listeners;
+	private TableController tableController;
 	//TODO: ADD messages.properties			
 	protected JButton btnDelete = new JButton( "DELETE" ); //$NON-NLS-1$	
 	protected JButton btnDuplicate = new JButton( "REPLICATE" ); //$NON-NLS-1$
@@ -48,13 +48,15 @@ public class TablePanel extends JPanel {
 	}
 	
 	public void initializePanel(){
-		listeners = new TablePanelListeners( this );
+		//TODO: Decide who initializes first controller or panel???
+		tableController = new TableController( this );
+		beanEditor = new TableForm( tableController );
 		
 		setLayout(new BorderLayout(10, 10));
 		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
 		browserTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		browserTable.getSelectionModel().addListSelectionListener( listeners );
+		browserTable.getSelectionModel().addListSelectionListener( tableController );
 		browserTable.setDefaultRenderer(Date.class, new CustomCellRenderer());
 
 		//Pass as a parameter???
@@ -91,12 +93,12 @@ public class TablePanel extends JPanel {
 
 		add(beanPanel, BorderLayout.EAST);
 
-		btnNew.addActionListener( listeners );
-		btnSave.addActionListener( listeners );
-		btnDelete.addActionListener( listeners );
-		btnCancel.addActionListener( listeners );		
-		btnDuplicate.addActionListener( listeners );
-		btnDeleteAll.addActionListener( listeners );			
+		btnNew.addActionListener( tableController );
+		btnSave.addActionListener( tableController );
+		btnDelete.addActionListener( tableController );
+		btnCancel.addActionListener( tableController );		
+		btnDuplicate.addActionListener( tableController );
+		btnDeleteAll.addActionListener( tableController );			
 
 		beanEditor.clearFields();
 		beanEditor.setFieldsEnable(false);

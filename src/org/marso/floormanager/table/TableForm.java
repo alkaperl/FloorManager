@@ -34,7 +34,7 @@ public class TableForm extends BeanEditor<ShopTable> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final TableBusinessLogic businessLogic = new TableBusinessLogic();
+	private final TableController tableController;
 	private FixedLengthTextField tfTableDescription;
 	private IntegerTextField tfTableNo;
 	private FixedLengthTextField tfTableName;
@@ -42,9 +42,11 @@ public class TableForm extends BeanEditor<ShopTable> {
 	private JPanel statusPanel;
 	private JRadioButton rbFree;
 	private JRadioButton rbDisable;
-	private TableFormCapacityButtons tableFormCapacityButtons;
+	private CapacityButtonsController capacityButtonsController;
 
-	public TableForm() {
+	public TableForm(TableController tableController) {
+		this.tableController = tableController;
+		
 		setPreferredSize(new Dimension(600, 800));
 		setLayout(new MigLayout("", "[][grow]", "[][][][][][][][]")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		setBorder(BorderFactory.createTitledBorder(Messages.getString("ShopTableForm.19"))); //$NON-NLS-1$
@@ -69,7 +71,7 @@ public class TableForm extends BeanEditor<ShopTable> {
 		JLabel lblCitytown = new JLabel(Messages.getString("ShopTableForm.3")); //$NON-NLS-1$
 		add(lblCitytown, "cell 0 3,alignx trailing"); //$NON-NLS-1$
 
-		tableFormCapacityButtons = new TableFormCapacityButtons(this);
+		capacityButtonsController = new CapacityButtonsController(this);
 
 		statusPanel = new JPanel();
 		statusPanel.setBorder(new TitledBorder(null, Messages.getString("ShopTableForm.4"), TitledBorder.LEADING, TitledBorder.TOP, null, null)); //$NON-NLS-1$
@@ -94,10 +96,10 @@ public class TableForm extends BeanEditor<ShopTable> {
 
 	@Override
 	public void createNew() {
-		ShopTable newShopTable = businessLogic.createNew();
+		ShopTable newShopTable = tableController.createNew();
 		setBean( newShopTable );
 		tfTableNo.setText( newShopTable.getName() );
-		tableFormCapacityButtons.setTableCapacity("4");//$NON-NLS-1$
+		capacityButtonsController.setTableCapacity("4");//$NON-NLS-1$
 		tfTableDescription.setText(""); //$NON-NLS-1$
 		tfTableName.setText(""); //$NON-NLS-1$
 		setBorder( BorderFactory.createTitledBorder( Messages.getString( "ShopTableForm.18" ) ) ); //$NON-NLS-1$
@@ -105,7 +107,7 @@ public class TableForm extends BeanEditor<ShopTable> {
 	
 	@Override
 	public boolean delete() {
-		boolean result = businessLogic.delete( getBean() );
+		boolean result = tableController.delete( getBean() );
 		if ( result ){
 			clearFields();
 		}
@@ -113,7 +115,7 @@ public class TableForm extends BeanEditor<ShopTable> {
 	}
 
 	public boolean deleteAllTables() {
-		boolean result = businessLogic.deleteAllTables();
+		boolean result = tableController.deleteAllTables();
 		if ( result ){
 			clearFields();
 		}
@@ -148,7 +150,7 @@ public class TableForm extends BeanEditor<ShopTable> {
 			tfTableNo.setText(String.valueOf(table.getTableNumber()));
 			tfTableName.setText(table.getName());
 			tfTableDescription.setText(table.getDescription());
-			tableFormCapacityButtons.setTableCapacity(String.valueOf(table.getCapacity()));
+			capacityButtonsController.setTableCapacity(String.valueOf(table.getCapacity()));
 			rbFree.setSelected(true);
 			rbDisable.setSelected(table.isDisable());
 			setBorder(BorderFactory.createTitledBorder(Messages.getString("ShopTableForm.56"))); //$NON-NLS-1$
@@ -177,7 +179,7 @@ public class TableForm extends BeanEditor<ShopTable> {
 		table.setId(tfTableNo.getInteger());
 		table.setName(tfTableName.getText());
 		table.setDescription(tfTableDescription.getText());
-		table.setCapacity(tableFormCapacityButtons.getTableCapacity());
+		table.setCapacity(capacityButtonsController.getTableCapacity());
 		List<ShopTableType> checkValues = tableTypeCBoxList.getCheckedValues();
 		table.setTypes(checkValues);
 		table.setServing(false);
@@ -194,7 +196,7 @@ public class TableForm extends BeanEditor<ShopTable> {
 	@Override
 	public void clearFields() {
 		tfTableNo.setText("");//$NON-NLS-1$
-		tableFormCapacityButtons.setTableCapacity("");//$NON-NLS-1$
+		capacityButtonsController.setTableCapacity("");//$NON-NLS-1$
 		tfTableDescription.setText(""); //$NON-NLS-1$
 		tfTableName.setText(""); //$NON-NLS-1$
 		rbFree.setSelected(false);
@@ -209,7 +211,7 @@ public class TableForm extends BeanEditor<ShopTable> {
 		tfTableNo.setEnabled(enable);
 		tfTableName.setEnabled(enable);
 		tfTableDescription.setEnabled(enable);
-		tableFormCapacityButtons.toggleCapacityButtons(enable);
+		capacityButtonsController.toggleCapacityButtons(enable);
 		rbFree.setEnabled(enable);
 		rbDisable.setEnabled(enable);
 	}
