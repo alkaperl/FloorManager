@@ -1,6 +1,7 @@
 package org.marso.floormanager.tabletype;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -18,10 +19,11 @@ import javax.swing.event.ListSelectionListener;
 import org.jdesktop.swingx.JXTable;
 
 import com.floreantpos.bo.ui.CustomCellRenderer;
-import com.floreantpos.model.ShopTable;
 import com.floreantpos.model.ShopTableType;
 import com.floreantpos.model.dao.ShopTableTypeDAO;
 import com.floreantpos.swing.BeanTableModel;
+
+import net.miginfocom.swing.MigLayout;
 
 public class EditTableTypePanel extends JPanel implements ActionListener, ListSelectionListener {
 
@@ -31,6 +33,7 @@ public class EditTableTypePanel extends JPanel implements ActionListener, ListSe
 	private static final long serialVersionUID = 1L;
 	protected JXTable browserTable = new JXTable();	
 	private BeanTableModel<ShopTableType> tableModel = new BeanTableModel<ShopTableType>(ShopTableType.class);	
+	protected EditTableTypeForm beanEditor = new EditTableTypeForm();	
 	//TODO: ADD messages.properties	
 	private JButton btnNew = new JButton( "NEW" ); //$NON-NLS-1$
 	private JButton btnSave = new JButton( "SAVE" ); //$NON-NLS-1$		
@@ -59,7 +62,16 @@ public class EditTableTypePanel extends JPanel implements ActionListener, ListSe
 		
 		JPanel browserPanel = new JPanel(new BorderLayout());
 		browserPanel.add(new JScrollPane(browserTable));
-		add(browserPanel);		
+		add(browserPanel, BorderLayout.WEST);		
+		
+		JPanel beanEditorPanel = new JPanel(new MigLayout()); //$NON-NLS-1$
+		beanEditorPanel.add(beanEditor);
+		JPanel beanPanel = new JPanel(new BorderLayout());
+		beanPanel.setBorder(BorderFactory.createEtchedBorder());			
+		beanPanel.add(beanEditorPanel);		
+		
+		beanPanel.setPreferredSize(new Dimension(600, 400));
+		add(beanPanel, BorderLayout.CENTER);		
 		
 		JPanel buttonPanel = new JPanel();
 		btnNew.addActionListener(this);
