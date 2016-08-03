@@ -1,4 +1,4 @@
-package org.marso.floormanager;
+package org.marso.floormanager.tableselector;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

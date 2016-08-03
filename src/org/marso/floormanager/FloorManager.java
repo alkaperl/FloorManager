@@ -6,6 +6,7 @@ import javax.swing.JMenu;
 
 import org.marso.floormanager.floor.EditFloorAction;
 import org.marso.floormanager.table.EditTableAction;
+import org.marso.floormanager.tableselector.FloorManagerTableSelector;
 import org.marso.floormanager.tabletype.EditTableTypeAction;
 
 import com.floreantpos.actions.PosAction;
