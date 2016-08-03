@@ -9,7 +9,6 @@ import com.floreantpos.model.ShopTable;
 import com.floreantpos.model.TableBookingInfo;
 import com.floreantpos.model.dao.ShopTableDAO;
 import com.floreantpos.model.dao.TableBookingInfoDAO;
-import com.floreantpos.swing.IntegerTextField;
 import com.floreantpos.ui.dialog.POSMessageDialog;
 import com.floreantpos.util.POSUtil;
 

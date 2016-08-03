@@ -2,20 +2,15 @@ package org.marso.floormanager.table;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import org.jdesktop.swingx.JXTable;
 
@@ -24,9 +19,6 @@ import com.floreantpos.bo.ui.CustomCellRenderer;
 import com.floreantpos.model.ShopTable;
 import com.floreantpos.model.dao.ShopTableDAO;
 import com.floreantpos.swing.BeanTableModel;
-import com.floreantpos.ui.BeanEditor;
-import com.floreantpos.ui.dialog.POSMessageDialog;
-import com.floreantpos.util.POSUtil;
 
 import net.miginfocom.swing.MigLayout;
 

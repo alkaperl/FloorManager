@@ -102,11 +102,12 @@ public class EditTableTypePanel extends JPanel implements ActionListener, ListSe
 		System.out.println("EditTableTypePanel.actionPerformed():"+e.getActionCommand()+":");
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void valueChanged(ListSelectionEvent e) {
-		System.out.println("EditTablePanel.valueChanged():"+e.getValueIsAdjusting()+":");
+		System.out.println("EditTableTypePanel.valueChanged():"+e.getValueIsAdjusting()+":");
 		
 		if ( !e.getValueIsAdjusting()) {
-			BeanTableModel model = (BeanTableModel) browserTable.getModel();
+			BeanTableModel<ShopTableType> model = (BeanTableModel<ShopTableType>) browserTable.getModel();
 			selectedRowIndex = browserTable.getSelectedRow();
 			if (selectedRowIndex > -1) {
 				System.out.println("EditTablePanel.valueChanged():selectedRow:"+selectedRowIndex+":");
