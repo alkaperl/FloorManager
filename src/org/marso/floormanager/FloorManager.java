@@ -17,6 +17,7 @@ import com.floreantpos.model.ShopTable;
 import com.floreantpos.model.Ticket;
 import com.floreantpos.ui.BeanEditor;
 import com.floreantpos.ui.tableselection.TableSelector;
+import com.floreantpos.util.POSUtil;
 
 import net.xeoh.plugins.base.annotations.PluginImplementation;
 
@@ -55,14 +56,13 @@ public class FloorManager implements FloorLayoutPlugin {
 	@Override
 	public void initBackoffice() {
 		System.out.println("FloorManager.initBackoffice()");	
-		// BackOfficeWindow --> createMenus(); --> plugin.initBackoffice(); 
-		BackOfficeWindow backOfficeWindow = com.floreantpos.util.POSUtil.getBackOfficeWindow();
+		// BackOfficeWindow --> createMenus() --> plugin.initBackoffice() 
+		BackOfficeWindow backOfficeWindow = POSUtil.getBackOfficeWindow();
 		JMenu floorManagerMenu = new JMenu("Floor Manager");
-		floorManagerMenu.add(new CongifurationMenuAction("1.Floors", new EditFloorPanel()));
-		floorManagerMenu.add(new CongifurationMenuAction("2.Tables", new EditTablePanel()));
-		floorManagerMenu.add(new CongifurationMenuAction("3.Table Types", new EditTableTypePanel()));
-		
-		backOfficeWindow.getBackOfficeMenuBar().remove(backOfficeWindow.getBackOfficeMenuBar().getComponentCount() -1);
+		floorManagerMenu.add(new CongifurationMenuAction("1.Floors", 	  new EditFloorPanel(), 	backOfficeWindow));
+		floorManagerMenu.add(new CongifurationMenuAction("2.Tables", 	  new EditTablePanel(), 	backOfficeWindow));
+		floorManagerMenu.add(new CongifurationMenuAction("3.Table Types", new EditTableTypePanel(), backOfficeWindow));
+		backOfficeWindow.getBackOfficeMenuBar().remove(backOfficeWindow.getBackOfficeMenuBar().getComponentCount() - 1);
 		backOfficeWindow.getBackOfficeMenuBar().add(floorManagerMenu);
 	}
 

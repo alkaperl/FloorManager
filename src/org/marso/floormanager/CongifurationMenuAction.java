@@ -16,17 +16,18 @@ public class CongifurationMenuAction extends PosAction {
 	//TODO: put in messages.properties
 	private String name;
 	private JPanel configurationPanel;
+	private BackOfficeWindow backOfficeWindow;
 
-	public CongifurationMenuAction(String nm, JPanel p) {
+	public CongifurationMenuAction(String nm, JPanel panel, BackOfficeWindow backOfficeWindowInstance) {
 		super(nm);
 		name = nm;
-		configurationPanel = p;
+		configurationPanel = panel;
+		backOfficeWindow = backOfficeWindowInstance;
 	}
 
 	@Override
 	public void execute() {
 		System.out.println("EditFloorAction.execute()");
-		BackOfficeWindow backOfficeWindow = com.floreantpos.util.POSUtil.getBackOfficeWindow();
 		JTabbedPane tabbedPane = backOfficeWindow.getTabbedPane();
 		int index = tabbedPane.indexOfTab(name); //$NON-NLS-1$
 		if (index == -1) {
@@ -36,5 +37,4 @@ public class CongifurationMenuAction extends PosAction {
 		}
 		tabbedPane.setSelectedComponent(configurationPanel);
 	}	
-
 }
