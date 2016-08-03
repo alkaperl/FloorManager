@@ -12,9 +12,9 @@ import com.floreantpos.model.dao.TableBookingInfoDAO;
 import com.floreantpos.ui.dialog.POSMessageDialog;
 import com.floreantpos.util.POSUtil;
 
-public class EditTableBusinessLogic {
+public class TableBusinessLogic {
 	
-	public EditTableBusinessLogic(){
+	public TableBusinessLogic(){
 		
 	}
 	

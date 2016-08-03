@@ -22,7 +22,7 @@ import com.floreantpos.swing.BeanTableModel;
 
 import net.miginfocom.swing.MigLayout;
 
-public class EditTablePanel extends JPanel {
+public class TablePanel extends JPanel {
 
 	/**
 	 * TODO: is serialised necessary??? 
@@ -30,10 +30,10 @@ public class EditTablePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	protected JXTable browserTable = new JXTable();
 	private BeanTableModel<ShopTable> tableModel = new BeanTableModel<ShopTable>(ShopTable.class);
-	protected EditTableForm beanEditor = new EditTableForm();
+	protected TableForm beanEditor = new TableForm();
 	protected int selectedRowIndex = -1;
 	protected int selectedRowId = -1;
-	private EditTablePanelListeners listeners;
+	private TablePanelListeners listeners;
 	//TODO: ADD messages.properties			
 	protected JButton btnDelete = new JButton( "DELETE" ); //$NON-NLS-1$	
 	protected JButton btnDuplicate = new JButton( "REPLICATE" ); //$NON-NLS-1$
@@ -42,13 +42,13 @@ public class EditTablePanel extends JPanel {
 	protected JButton btnSave = new JButton( "SAVE" ); //$NON-NLS-1$		
 	protected JButton btnCancel = new JButton( "CLEAR CHANGES" ); //$NON-NLS-1$		
 	
-	public EditTablePanel() {
+	public TablePanel() {
 		this.setName("EditFloorPanel");
 		initializePanel();
 	}
 	
 	public void initializePanel(){
-		listeners = new EditTablePanelListeners( this );
+		listeners = new TablePanelListeners( this );
 		
 		setLayout(new BorderLayout(10, 10));
 		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

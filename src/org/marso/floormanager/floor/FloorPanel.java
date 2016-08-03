@@ -18,7 +18,7 @@ import javax.swing.event.ListSelectionListener;
 import com.floreantpos.bo.ui.Command;
 import com.floreantpos.model.ShopFloor;
 
-public class EditFloorPanel extends JPanel implements ActionListener, ListSelectionListener {
+public class FloorPanel extends JPanel implements ActionListener, ListSelectionListener {
 
 	
 	/**
@@ -29,7 +29,7 @@ public class EditFloorPanel extends JPanel implements ActionListener, ListSelect
     private JList<ShopFloor> floorsList;
     private FloorView floorView;	
 
-	public EditFloorPanel() {
+	public FloorPanel() {
 		listModel = new DefaultListModel<ShopFloor>();
         floorsList = new JList<ShopFloor>(this.listModel);
         floorView = new FloorView(this.floorsList);

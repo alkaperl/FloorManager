@@ -17,7 +17,7 @@ import com.floreantpos.ui.BeanEditor;
 
 import net.miginfocom.swing.MigLayout;
 
-public class EditTableTypeForm extends BeanEditor<ShopTable> {
+public class TableTypeForm extends BeanEditor<ShopTable> {
 
 	/**
 	 * 
@@ -28,7 +28,7 @@ public class EditTableTypeForm extends BeanEditor<ShopTable> {
 	private FixedLengthTextField tfTableTypeDescription;
 	private FixedLengthTextField tfTableTypeName;
 	
-	public EditTableTypeForm() {
+	public TableTypeForm() {
 		setPreferredSize(new Dimension(600, 800));
 		setLayout(new MigLayout("", "[][grow]", "[][][][][][][][]")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		setBorder(BorderFactory.createTitledBorder(Messages.getString("ShopTableForm.19"))); //$NON-NLS-1$

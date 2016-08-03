@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.swing.JMenu;
 
-import org.marso.floormanager.floor.EditFloorPanel;
-import org.marso.floormanager.table.EditTablePanel;
+import org.marso.floormanager.floor.FloorPanel;
+import org.marso.floormanager.table.TablePanel;
 import org.marso.floormanager.tableselector.FloorManagerTableSelector;
-import org.marso.floormanager.tabletype.EditTableTypePanel;
+import org.marso.floormanager.tabletype.TableTypePanel;
 
 import com.floreantpos.actions.PosAction;
 import com.floreantpos.bo.ui.BackOfficeWindow;
@@ -59,9 +59,9 @@ public class FloorManager implements FloorLayoutPlugin {
 		// BackOfficeWindow --> createMenus() --> plugin.initBackoffice() 
 		BackOfficeWindow backOfficeWindow = POSUtil.getBackOfficeWindow();
 		JMenu floorManagerMenu = new JMenu("Floor Manager");
-		floorManagerMenu.add(new CongifurationMenuAction("1.Floors", 	  new EditFloorPanel(), 	backOfficeWindow));
-		floorManagerMenu.add(new CongifurationMenuAction("2.Tables", 	  new EditTablePanel(), 	backOfficeWindow));
-		floorManagerMenu.add(new CongifurationMenuAction("3.Table Types", new EditTableTypePanel(), backOfficeWindow));
+		floorManagerMenu.add(new CongifurationMenuAction("1.Floors", 	  new FloorPanel(), 	backOfficeWindow));
+		floorManagerMenu.add(new CongifurationMenuAction("2.Tables", 	  new TablePanel(), 	backOfficeWindow));
+		floorManagerMenu.add(new CongifurationMenuAction("3.Table Types", new TableTypePanel(), backOfficeWindow));
 		backOfficeWindow.getBackOfficeMenuBar().remove(backOfficeWindow.getBackOfficeMenuBar().getComponentCount() - 1);
 		backOfficeWindow.getBackOfficeMenuBar().add(floorManagerMenu);
 	}

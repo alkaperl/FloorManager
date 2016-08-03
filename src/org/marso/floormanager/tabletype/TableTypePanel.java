@@ -25,7 +25,7 @@ import com.floreantpos.swing.BeanTableModel;
 
 import net.miginfocom.swing.MigLayout;
 
-public class EditTableTypePanel extends JPanel implements ActionListener, ListSelectionListener {
+public class TableTypePanel extends JPanel implements ActionListener, ListSelectionListener {
 
 	/**
 	 * TODO: is serialised necessary??? 
@@ -33,7 +33,7 @@ public class EditTableTypePanel extends JPanel implements ActionListener, ListSe
 	private static final long serialVersionUID = 1L;
 	protected JXTable browserTable = new JXTable();	
 	private BeanTableModel<ShopTableType> tableModel = new BeanTableModel<ShopTableType>(ShopTableType.class);	
-	protected EditTableTypeForm beanEditor = new EditTableTypeForm();	
+	protected TableTypeForm beanEditor = new TableTypeForm();	
 	//TODO: ADD messages.properties	
 	private JButton btnNew = new JButton( "NEW" ); //$NON-NLS-1$
 	private JButton btnSave = new JButton( "SAVE" ); //$NON-NLS-1$		
@@ -42,7 +42,7 @@ public class EditTableTypePanel extends JPanel implements ActionListener, ListSe
 	protected int selectedRowIndex = -1;
 	protected int selectedRowId = -1;	
 	
-	public EditTableTypePanel() {
+	public TableTypePanel() {
 		this.setName("EditFloorTypePanel");
 		initializePanel();
 	}

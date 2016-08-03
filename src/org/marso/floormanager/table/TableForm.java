@@ -28,13 +28,13 @@ import com.floreantpos.ui.BeanEditor;
 
 import net.miginfocom.swing.MigLayout;
 
-public class EditTableForm extends BeanEditor<ShopTable> {
+public class TableForm extends BeanEditor<ShopTable> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final EditTableBusinessLogic businessLogic = new EditTableBusinessLogic();
+	private final TableBusinessLogic businessLogic = new TableBusinessLogic();
 	private FixedLengthTextField tfTableDescription;
 	private IntegerTextField tfTableNo;
 	private FixedLengthTextField tfTableName;
@@ -42,9 +42,9 @@ public class EditTableForm extends BeanEditor<ShopTable> {
 	private JPanel statusPanel;
 	private JRadioButton rbFree;
 	private JRadioButton rbDisable;
-	private EditTableFormCapacityButtons editTableFormCapacityButtons;
+	private TableFormCapacityButtons tableFormCapacityButtons;
 
-	public EditTableForm() {
+	public TableForm() {
 		setPreferredSize(new Dimension(600, 800));
 		setLayout(new MigLayout("", "[][grow]", "[][][][][][][][]")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		setBorder(BorderFactory.createTitledBorder(Messages.getString("ShopTableForm.19"))); //$NON-NLS-1$
@@ -69,7 +69,7 @@ public class EditTableForm extends BeanEditor<ShopTable> {
 		JLabel lblCitytown = new JLabel(Messages.getString("ShopTableForm.3")); //$NON-NLS-1$
 		add(lblCitytown, "cell 0 3,alignx trailing"); //$NON-NLS-1$
 
-		editTableFormCapacityButtons = new EditTableFormCapacityButtons(this);
+		tableFormCapacityButtons = new TableFormCapacityButtons(this);
 
 		statusPanel = new JPanel();
 		statusPanel.setBorder(new TitledBorder(null, Messages.getString("ShopTableForm.4"), TitledBorder.LEADING, TitledBorder.TOP, null, null)); //$NON-NLS-1$
@@ -97,7 +97,7 @@ public class EditTableForm extends BeanEditor<ShopTable> {
 		ShopTable newShopTable = businessLogic.createNew();
 		setBean( newShopTable );
 		tfTableNo.setText( newShopTable.getName() );
-		editTableFormCapacityButtons.setTableCapacity("4");//$NON-NLS-1$
+		tableFormCapacityButtons.setTableCapacity("4");//$NON-NLS-1$
 		tfTableDescription.setText(""); //$NON-NLS-1$
 		tfTableName.setText(""); //$NON-NLS-1$
 		setBorder( BorderFactory.createTitledBorder( Messages.getString( "ShopTableForm.18" ) ) ); //$NON-NLS-1$
@@ -148,7 +148,7 @@ public class EditTableForm extends BeanEditor<ShopTable> {
 			tfTableNo.setText(String.valueOf(table.getTableNumber()));
 			tfTableName.setText(table.getName());
 			tfTableDescription.setText(table.getDescription());
-			editTableFormCapacityButtons.setTableCapacity(String.valueOf(table.getCapacity()));
+			tableFormCapacityButtons.setTableCapacity(String.valueOf(table.getCapacity()));
 			rbFree.setSelected(true);
 			rbDisable.setSelected(table.isDisable());
 			setBorder(BorderFactory.createTitledBorder(Messages.getString("ShopTableForm.56"))); //$NON-NLS-1$
@@ -177,7 +177,7 @@ public class EditTableForm extends BeanEditor<ShopTable> {
 		table.setId(tfTableNo.getInteger());
 		table.setName(tfTableName.getText());
 		table.setDescription(tfTableDescription.getText());
-		table.setCapacity(editTableFormCapacityButtons.getTableCapacity());
+		table.setCapacity(tableFormCapacityButtons.getTableCapacity());
 		List<ShopTableType> checkValues = tableTypeCBoxList.getCheckedValues();
 		table.setTypes(checkValues);
 		table.setServing(false);
@@ -194,7 +194,7 @@ public class EditTableForm extends BeanEditor<ShopTable> {
 	@Override
 	public void clearFields() {
 		tfTableNo.setText("");//$NON-NLS-1$
-		editTableFormCapacityButtons.setTableCapacity("");//$NON-NLS-1$
+		tableFormCapacityButtons.setTableCapacity("");//$NON-NLS-1$
 		tfTableDescription.setText(""); //$NON-NLS-1$
 		tfTableName.setText(""); //$NON-NLS-1$
 		rbFree.setSelected(false);
@@ -209,7 +209,7 @@ public class EditTableForm extends BeanEditor<ShopTable> {
 		tfTableNo.setEnabled(enable);
 		tfTableName.setEnabled(enable);
 		tfTableDescription.setEnabled(enable);
-		editTableFormCapacityButtons.toggleCapacityButtons(enable);
+		tableFormCapacityButtons.toggleCapacityButtons(enable);
 		rbFree.setEnabled(enable);
 		rbDisable.setEnabled(enable);
 	}
