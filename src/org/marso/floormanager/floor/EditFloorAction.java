@@ -13,7 +13,7 @@ public class EditFloorAction extends PosAction {
 	private static final long serialVersionUID = 1L;
 	
 	//TODO: put in messages.properties
-	private static String name = "Edit Floors";
+	private static String name = "Floors";
 
 	public EditFloorAction() {
 		super(name);

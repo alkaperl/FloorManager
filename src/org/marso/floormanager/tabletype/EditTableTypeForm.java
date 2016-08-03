@@ -24,6 +24,7 @@ public class EditTableTypeForm extends BeanEditor<ShopTable> {
 	 */
 	private static final long serialVersionUID = 1L;
 //	private final EditTableBusinessLogic businessLogic = new EditTableBusinessLogic();
+	private FixedLengthTextField tfTableTypeId;
 	private FixedLengthTextField tfTableTypeDescription;
 	private FixedLengthTextField tfTableTypeName;
 	
@@ -32,19 +33,26 @@ public class EditTableTypeForm extends BeanEditor<ShopTable> {
 		setLayout(new MigLayout("", "[][grow]", "[][][][][][][][]")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		setBorder(BorderFactory.createTitledBorder(Messages.getString("ShopTableForm.19"))); //$NON-NLS-1$
 
-		add( new JLabel( "NAME" ), "cell 0 0,alignx trailing,aligny center"); //$NON-NLS-1$
+		add( new JLabel( "ID" ), "cell 0 0,alignx trailing,aligny center"); //$NON-NLS-1$
+
+		tfTableTypeId = new FixedLengthTextField();
+		tfTableTypeId.setText("id");
+		add( tfTableTypeId, "cell 1 0,aligny top"); //$NON-NLS-1$
+		tfTableTypeId.setEnabled(false);
+		
+		add( new JLabel( "NAME" ), "cell 0 1,alignx trailing,aligny center"); //$NON-NLS-1$
 
 		tfTableTypeName = new FixedLengthTextField();
-		add( tfTableTypeName, "cell 1 0,aligny top"); //$NON-NLS-1$
+		tfTableTypeName.setText("name");
+		add( tfTableTypeName, "cell 1 1,aligny top"); //$NON-NLS-1$
 		
 		add( new JLabel( "DESCRIPTION" ), "cell 0 2,alignx trailing"); //$NON-NLS-1$
 
 		tfTableTypeDescription = new FixedLengthTextField();
+		tfTableTypeDescription.setText("desc");
 		add( tfTableTypeDescription, "cell 1 2,growx"); //$NON-NLS-1$
 
 		add(new JLabel(), "grow,span"); //$NON-NLS-1$
-		
-		add(new JLabel( "ONEMORELABEL"), "cell 0 5"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	@Override
