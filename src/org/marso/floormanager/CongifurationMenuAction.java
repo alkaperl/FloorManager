@@ -1,11 +1,12 @@
-package org.marso.floormanager.floor;
+package org.marso.floormanager;
 
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import com.floreantpos.actions.PosAction;
 import com.floreantpos.bo.ui.BackOfficeWindow;
 
-public class EditFloorAction extends PosAction {
+public class CongifurationMenuAction extends PosAction {
 
 	/**
 	 * 
@@ -13,32 +14,27 @@ public class EditFloorAction extends PosAction {
 	private static final long serialVersionUID = 1L;
 	
 	//TODO: put in messages.properties
-	private static String name = "Floors";
+	private String name;
+	private JPanel configurationPanel;
 
-	public EditFloorAction() {
-		super(name);
-		//super(Messages.getString("ShowTableBrowserAction.0")); //$NON-NLS-1$
-		
+	public CongifurationMenuAction(String nm, JPanel p) {
+		super(nm);
+		name = nm;
+		configurationPanel = p;
 	}
 
 	@Override
 	public void execute() {
 		System.out.println("EditFloorAction.execute()");
-
 		BackOfficeWindow backOfficeWindow = com.floreantpos.util.POSUtil.getBackOfficeWindow();
-
-		//ShopTableBrowser explorer = null;
-		EditFloorPanel explorer = null;
 		JTabbedPane tabbedPane = backOfficeWindow.getTabbedPane();
 		int index = tabbedPane.indexOfTab(name); //$NON-NLS-1$
 		if (index == -1) {
-			explorer = new EditFloorPanel();
-			tabbedPane.addTab(name, explorer); //$NON-NLS-1$
+			tabbedPane.addTab(name, configurationPanel); //$NON-NLS-1$
+		} else {
+			configurationPanel = (JPanel) tabbedPane.getComponentAt(index);
 		}
-		else {
-			explorer = (EditFloorPanel) tabbedPane.getComponentAt(index);
-		}
-		tabbedPane.setSelectedComponent(explorer);
+		tabbedPane.setSelectedComponent(configurationPanel);
 	}	
 
 }
