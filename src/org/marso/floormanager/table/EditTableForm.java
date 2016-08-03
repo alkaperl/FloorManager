@@ -209,7 +209,7 @@ public class EditTableForm extends BeanEditor<ShopTable> {
 		tfTableNo.setEnabled(enable);
 		tfTableName.setEnabled(enable);
 		tfTableDescription.setEnabled(enable);
-		editTableFormCapacityButtons.enableAllCapacityButtons(enable);
+		editTableFormCapacityButtons.toggleCapacityButtons(enable);
 		rbFree.setEnabled(enable);
 		rbDisable.setEnabled(enable);
 	}

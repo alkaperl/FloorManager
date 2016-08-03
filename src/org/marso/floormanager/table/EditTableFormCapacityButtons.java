@@ -22,12 +22,12 @@ public class EditTableFormCapacityButtons implements ActionListener {
 	public EditTableFormCapacityButtons(JPanel tableForm){
 		tableForm.add(tfTableCapacity, "flowx,grow,cell 1 3"); //$NON-NLS-1$
 		
-		btnCapacityOne.setPreferredSize(new Dimension(52, 52));
-		btnCapacityTwo.setPreferredSize(new Dimension(52, 52));
-		btnCapacityFour.setPreferredSize(new Dimension(52, 52));
-		btnCapacitySix.setPreferredSize(new Dimension(52, 52));
-		btnCapacityEight.setPreferredSize(new Dimension(52, 52));		
-		btnCapacityTen.setPreferredSize(new Dimension(52, 52));
+		btnCapacityOne.setPreferredSize(	new Dimension(52, 52));
+		btnCapacityTwo.setPreferredSize(	new Dimension(52, 52));
+		btnCapacityFour.setPreferredSize(	new Dimension(52, 52));
+		btnCapacitySix.setPreferredSize(	new Dimension(52, 52));
+		btnCapacityEight.setPreferredSize(	new Dimension(52, 52));		
+		btnCapacityTen.setPreferredSize(	new Dimension(52, 52));
 
 		btnCapacityOne.addActionListener(this);
 		btnCapacityTwo.addActionListener(this);
@@ -36,15 +36,15 @@ public class EditTableFormCapacityButtons implements ActionListener {
 		btnCapacityEight.addActionListener(this);
 		btnCapacityTen.addActionListener(this);
 
-		tableForm.add(btnCapacityOne, "cell 1 3"); //$NON-NLS-1$
-		tableForm.add(btnCapacityTwo, "cell 1 3"); //$NON-NLS-1$
+		tableForm.add(btnCapacityOne,  "cell 1 3"); //$NON-NLS-1$
+		tableForm.add(btnCapacityTwo,  "cell 1 3"); //$NON-NLS-1$
 		tableForm.add(btnCapacityFour, "cell 1 3"); //$NON-NLS-1$
-		tableForm.add(btnCapacitySix, "cell 1 3"); //$NON-NLS-1$
-		tableForm.add(btnCapacityEight, "cell 1 3"); //$NON-NLS-1$
-		tableForm.add(btnCapacityTen, "cell 1 3"); //$NON-NLS-1$
+		tableForm.add(btnCapacitySix,  "cell 1 3"); //$NON-NLS-1$
+		tableForm.add(btnCapacityEight,"cell 1 3"); //$NON-NLS-1$
+		tableForm.add(btnCapacityTen,  "cell 1 3"); //$NON-NLS-1$
 	}
 	
-	public void enableAllCapacityButtons(boolean enable){
+	public void toggleCapacityButtons(boolean enable){
 		tfTableCapacity.setEnabled(enable);
 		btnCapacityOne.setEnabled(enable);
 		btnCapacityTwo.setEnabled(enable);
