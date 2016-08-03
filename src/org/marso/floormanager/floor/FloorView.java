@@ -1,23 +1,47 @@
 package org.marso.floormanager.floor;
 
-import com.floreantpos.ui.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.awt.event.*;
-import com.floreantpos.util.*;
-import com.floreantpos.model.*;
-import com.floreantpos.swing.*;
-import org.apache.commons.io.*;
-import com.floreantpos.model.dao.*;
-import java.io.*;
-import org.apache.commons.lang.*;
-import com.floreantpos.ui.dialog.*;
-import com.floreantpos.*;
-import java.util.*;
-import javax.swing.*;
+import java.util.Set;
 
-public class FloorView extends JPanel
-{
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.SwingUtilities;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
+
+import com.floreantpos.PosException;
+import com.floreantpos.model.ShopFloor;
+import com.floreantpos.model.ShopTable;
+import com.floreantpos.model.dao.ShopFloorDAO;
+import com.floreantpos.model.dao.ShopTableDAO;
+import com.floreantpos.swing.FixedLengthTextField;
+import com.floreantpos.swing.ImageComponent;
+import com.floreantpos.ui.TitlePanel;
+import com.floreantpos.ui.dialog.NumberSelectionDialog2;
+import com.floreantpos.ui.dialog.POSMessageDialog;
+import com.floreantpos.util.POSUtil;
+
+public class FloorView extends JPanel {
     private ShopFloor floor;
     private FixedLengthTextField tfFloorName;
     TitlePanel titlePanel;
@@ -38,6 +62,23 @@ public class FloorView extends JPanel
         this.createButtonPanel();
     }
     
+    private void createHeaderPanel() {
+        final JPanel headerPanel = new JPanel(new FlowLayout(3));
+        headerPanel.add(new JLabel("Floor name"));
+        this.tfFloorName.setColumns(30);
+        headerPanel.add((Component)this.tfFloorName);
+        final JButton btnUpdate = new JButton("UPDATE");
+        btnUpdate.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent e) {
+                if (floor != null) {
+                	updateFloorName();
+                }                
+            }
+        });
+        headerPanel.add(btnUpdate);
+        this.add(headerPanel, "North");
+    }
+    
     private void createLayoutPanel() {
         this.floorPanel.addMouseListener(new MouseAdapter() {
             public void mouseClicked(final MouseEvent e) {
@@ -48,25 +89,7 @@ public class FloorView extends JPanel
         final JPanel floorPanelContainer = new JPanel();
         floorPanelContainer.add(this.floorPanel);
         this.add(floorPanelContainer);
-    }
-    
-    private void createHeaderPanel() {
-        final JPanel headerPanel = new JPanel(new FlowLayout(3));
-        headerPanel.add(new JLabel("Floor name"));
-        this.tfFloorName.setColumns(30);
-        headerPanel.add((Component)this.tfFloorName);
-        final JButton btnUpdate = new JButton("UPDATE");
-        btnUpdate.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent e) {
-                if (FloorView.this.floor == null) {
-                    return;
-                }
-                FloorView.this.updateFloorName();
-            }
-        });
-        headerPanel.add(btnUpdate);
-        this.add(headerPanel, "North");
-    }
+    }    
     
     private void createButtonPanel() {
         final JButton btnAdd = new JButton("SET FLOOR IMAGE");
@@ -81,18 +104,16 @@ public class FloorView extends JPanel
             public void actionPerformed(final ActionEvent e) {
                 try {
                     final List<ShopTable> selectedTables = FloorView.this.getSelectedTables();
-                    if (selectedTables.size() == 0) {
-                        return;
+                    if (selectedTables.size() > 0) {                     
+	                    final int option = JOptionPane.showOptionDialog((Component)POSUtil.getBackOfficeWindow(), "Are you sure to delete selected tables?", "Confirm", 0, 3, null, null, null);
+	                    if (option != 0) {
+	                        return;
+	                    }
+	                    ShopTableDAO.getInstance().deleteTables((Collection)selectedTables);
+	                    FloorView.this.floor.getTables().removeAll(selectedTables);
+	                    FloorView.this.renderFloor();
                     }
-                    final int option = JOptionPane.showOptionDialog((Component)POSUtil.getBackOfficeWindow(), "Are you sure to delete selected tables?", "Confirm", 0, 3, null, null, null);
-                    if (option != 0) {
-                        return;
-                    }
-                    ShopTableDAO.getInstance().deleteTables((Collection)selectedTables);
-                    FloorView.this.floor.getTables().removeAll(selectedTables);
-                    FloorView.this.renderFloor();
-                }
-                catch (Exception e2) {
+                } catch (Exception e2) {
                     POSMessageDialog.showError((Component)FloorView.this, e2.getMessage(), (Throwable)e2);
                 }
             }
@@ -101,7 +122,7 @@ public class FloorView extends JPanel
         final JButton btnRemoveAllTables = new JButton("REMOVE ALL TABLES");
         btnRemoveAllTables.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
-                FloorView.this.removeTables();
+                removeTables();
             }
         });
         this.buttonPanel.add(btnRemoveAllTables);
@@ -113,27 +134,25 @@ public class FloorView extends JPanel
     
     private void renderFloor() throws Exception {
         this.floorPanel.removeAll();
-        if (this.floor == null) {
-            return;
+        if (this.floor != null) {
+	        this.tfFloorName.setText(this.floor.getName());
+	        final byte[] imageData = this.floor.getImageData();
+	        if (imageData != null) {	
+		        final ImageIcon imageIcon = new ImageIcon(imageData);
+		        final ImageComponent imageComponent = new ImageComponent(imageIcon.getImage());
+		        imageComponent.setBounds(this.floorPanel.getVisibleRect());
+		        this.floorPanel.add((Component)imageComponent);
+		        final Set<ShopTable> tables = (Set<ShopTable>)this.floor.getTables();
+		        if (tables != null) {
+		            for (final ShopTable shopTable : tables) {
+		                this.floorPanel.add(new TableButton(shopTable));
+		            }
+		        }
+		        this.floorPanel.moveToBack((Component)imageComponent);
+		        this.floorPanel.revalidate();
+		        this.floorPanel.repaint();
+        	}
         }
-        this.tfFloorName.setText(this.floor.getName());
-        final byte[] imageData = this.floor.getImageData();
-        if (imageData == null) {
-            return;
-        }
-        final ImageIcon imageIcon = new ImageIcon(imageData);
-        final ImageComponent imageComponent = new ImageComponent(imageIcon.getImage());
-        imageComponent.setBounds(this.floorPanel.getVisibleRect());
-        this.floorPanel.add((Component)imageComponent);
-        final Set<ShopTable> tables = (Set<ShopTable>)this.floor.getTables();
-        if (tables != null) {
-            for (final ShopTable shopTable : tables) {
-                this.floorPanel.add(new TableButton(shopTable));
-            }
-        }
-        this.floorPanel.moveToBack((Component)imageComponent);
-        this.floorPanel.revalidate();
-        this.floorPanel.repaint();
     }
     
     public ShopFloor getFloor() {
@@ -144,8 +163,7 @@ public class FloorView extends JPanel
         this.floor = floor;
         try {
             this.renderFloor();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -153,18 +171,16 @@ public class FloorView extends JPanel
     public void selectImageFromFile() {
         final JFileChooser fileChooser = new JFileChooser();
         final int option = fileChooser.showOpenDialog(POSUtil.getFocusedWindow());
-        if (option != 0) {
-            return;
-        }
-        final File file = fileChooser.getSelectedFile();
-        try {
-            final byte[] imageData = FileUtils.readFileToByteArray(file);
-            this.floor.setImageData(imageData);
-            ShopFloorDAO.getInstance().saveOrUpdate(this.floor);
-            this.renderFloor();
-        }
-        catch (Exception e1) {
-            POSMessageDialog.showError((Component)POSUtil.getFocusedWindow(), e1.getMessage(), (Throwable)e1);
+        if (option == 0) {
+	        final File file = fileChooser.getSelectedFile();
+	        try {
+	            final byte[] imageData = FileUtils.readFileToByteArray(file);
+	            this.floor.setImageData(imageData);
+	            ShopFloorDAO.getInstance().saveOrUpdate(this.floor);
+	            this.renderFloor();
+	        } catch (Exception e1) {
+	            POSMessageDialog.showError((Component)POSUtil.getFocusedWindow(), e1.getMessage(), (Throwable)e1);
+	        }
         }
     }
     
@@ -178,8 +194,7 @@ public class FloorView extends JPanel
             this.floor.setName(text);
             ShopFloorDAO.getInstance().saveOrUpdate(this.floor);
             this.floorsList.repaint();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             POSMessageDialog.showError((Component)POSUtil.getFocusedWindow(), e.getMessage(), (Throwable)e);
         }
     }
@@ -191,32 +206,30 @@ public class FloorView extends JPanel
             dialog.setFloatingPoint(false);
             dialog.pack();
             dialog.open();
-            if (dialog.isCanceled()) {
-                return;
-            }
-            final int tableNumberInt = (int)dialog.getValue();
-            final String tableNumberStr = String.valueOf(tableNumberInt);
-            if (this.floor.hasTableWithNumber(tableNumberStr)) {
-                throw new PosException("A table with this number already exists.");
-            }
-            final ShopTable shopTable = ShopTableDAO.getInstance().getByNumber(tableNumberInt);
-            if (shopTable != null) {
-                throw new PosException("A table with this number already exists.");
-            }
-            final ShopTable table = new ShopTable();
-            table.setFloor(this.floor);
-            table.setName(tableNumberStr);
-            table.setX(e.getX());
-            table.setY(e.getY());
-            this.floor.addTotables(table);
-            ShopFloorDAO.getInstance().saveOrUpdate(this.floor);
-            final TableButton button = new TableButton(table);
-            this.floorPanel.add(button);
-            this.floorPanel.moveToFront(button);
-            this.floorPanel.revalidate();
-            this.floorPanel.repaint();
-        }
-        catch (PosException e2) {
+            if (!dialog.isCanceled()) {
+	            final int tableNumberInt = (int)dialog.getValue();
+	            final String tableNumberStr = String.valueOf(tableNumberInt);
+	            if (this.floor.hasTableWithNumber(tableNumberStr)) {
+	                throw new PosException("A table with this number already exists.");
+	            }
+	            final ShopTable shopTable = ShopTableDAO.getInstance().getByNumber(tableNumberInt);
+	            if (shopTable != null) {
+	                throw new PosException("A table with this number already exists.");
+	            }
+	            final ShopTable table = new ShopTable();
+	            table.setFloor(this.floor);
+	            table.setName(tableNumberStr);
+	            table.setX(e.getX());
+	            table.setY(e.getY());
+	            this.floor.addTotables(table);
+	            ShopFloorDAO.getInstance().saveOrUpdate(this.floor);
+	            final TableButton button = new TableButton(table);
+	            this.floorPanel.add(button);
+	            this.floorPanel.moveToFront(button);
+	            this.floorPanel.revalidate();
+	            this.floorPanel.repaint();
+            }            
+        } catch (PosException e2) {
             POSMessageDialog.showError((Component)SwingUtilities.getWindowAncestor(this), e2.getMessage());
         }
         catch (Exception e3) {
@@ -226,28 +239,24 @@ public class FloorView extends JPanel
     
     private void removeTables() {
         try {
-            if (this.floor == null) {
-                return;
-            }
-            final Set<ShopTable> tables = (Set<ShopTable>)this.floor.getTables();
-            if (tables == null) {
-                return;
-            }
-            final int option = JOptionPane.showOptionDialog(this, "Are you sure to delete all tabls of " + this.floor.getName() + "?", "Confirm", 0, 3, null, null, null);
-            if (option != 0) {
-                return;
-            }
-            ShopTableDAO.getInstance().deleteTables((Collection)tables);
-            this.floor.getTables().clear();
-            this.renderFloor();
-        }
-        catch (Exception e) {
+            if (this.floor != null) {
+	            final Set<ShopTable> tables = (Set<ShopTable>)this.floor.getTables();
+	            if (tables != null) {
+		            final int option = JOptionPane.showOptionDialog(this, "Are you sure to delete all tables of " + this.floor.getName() + "?", "Confirm", 0, 3, null, null, null);
+		            if (option == 0) {
+			            ShopTableDAO.getInstance().deleteTables((Collection)tables);
+			            this.floor.getTables().clear();
+			            this.renderFloor();
+		            }		            
+	            }	            
+            }            
+        } catch (Exception e) {
             POSMessageDialog.showError((Component)this, e.getMessage(), (Throwable)e);
         }
     }
     
     private List<ShopTable> getSelectedTables() {
-        final Component[] components = this.floorPanel.getComponents();
+        final Component[] components = floorPanel.getComponents();
         final List<ShopTable> selectedTables = new ArrayList<ShopTable>();
         for (final Component component : components) {
             if (component instanceof TableButton) {
@@ -258,20 +267,5 @@ public class FloorView extends JPanel
             }
         }
         return selectedTables;
-    }
-    
-    class TableButton extends JToggleButton
-    {
-        ShopTable table;
-        
-        public TableButton(final ShopTable table) {
-            this.table = table;
-            this.setText(table.getTableNumber() + "");
-            this.setBounds(table.getX() - 20, table.getY() - 20, 40, 40);
-        }
-        
-        public ShopTable getTable() {
-            return this.table;
-        }
     }
 }
