@@ -1,88 +1,75 @@
 package org.marso.floormanager.floor;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
-import com.floreantpos.Messages;
 import com.floreantpos.bo.ui.Command;
+import com.floreantpos.model.ShopFloor;
 
-public class EditFloorPanel extends JPanel implements ActionListener {
+public class EditFloorPanel extends JPanel implements ActionListener, ListSelectionListener {
 
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+    private DefaultListModel<ShopFloor> listModel;
+    private JList<ShopFloor> floorsList;
+    private FloorView floorView;	
 
 	public EditFloorPanel() {
-		this.setName("EditFloorPanel");
-		initializePanel();
-	}
-	
-	public void initializePanel(){
-		setLayout(new BorderLayout(10, 10));
-		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-//			browserTable = new JXTable();
-//			browserTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//			browserTable.getSelectionModel().addListSelectionListener(this);
-//			browserTable.setDefaultRenderer(Date.class, new CustomCellRenderer());
-//
-//			if (tableModel != null) {
-//				browserTable.setModel(tableModel);
-//			}
+		listModel = new DefaultListModel<ShopFloor>();
+        floorsList = new JList<ShopFloor>(this.listModel);
+        floorView = new FloorView(this.floorsList);
+        initUI();
+    }
+    
+    private void initUI() {
+        setLayout(new BorderLayout(10, 10));
 
-
-//			if (searchPanel != null) {
-//				searchPanel.setModelBrowser(this);
-//				browserPanel.add(searchPanel, BorderLayout.NORTH);
-//			}
-//			browserPanel.add(new JScrollPane(browserTable));
-//			add(browserPanel);
-
-//			JPanel beanEditorPanel = new JPanel(new MigLayout()); //$NON-NLS-1$
-//			beanEditorPanel.add(beanEditor);
-			JPanel beanPanel = new JPanel(new BorderLayout());
-			beanPanel.setBorder(BorderFactory.createEtchedBorder());			
-//			beanPanel.add(beanEditorPanel);
-
-			JPanel buttonPanel = new JPanel();
-
-			JButton btnNew = new JButton(Messages.getString("ModelBrowser.0")); //$NON-NLS-1$
-			JButton btnEdit = new JButton(Messages.getString("ModelBrowser.1")); //$NON-NLS-1$
-			JButton btnSave = new JButton(Messages.getString("ModelBrowser.2")); //$NON-NLS-1$
-
-			buttonPanel.add(btnNew);
-			buttonPanel.add(btnEdit);
-			buttonPanel.add(btnSave);
-
-			beanPanel.setPreferredSize(new Dimension(600, 400));
-			beanPanel.add(buttonPanel, BorderLayout.SOUTH);
-
-			add(beanPanel, BorderLayout.EAST);
-
-			btnNew.addActionListener(this);
-			btnEdit.addActionListener(this);
-			btnSave.addActionListener(this);
-
-			btnNew.setEnabled(true);
-			btnEdit.setEnabled(false);
-			btnSave.setEnabled(false);
-
-//			beanEditor.clearFields();
-//			beanEditor.setFieldsEnable(false);
-
-	}
+        final JPanel floorListPanel = new JPanel(new BorderLayout(5, 5));
+        floorListPanel.setBorder(BorderFactory.createTitledBorder("Floors"));
+        
+        final JScrollPane listScrollPane = new JScrollPane(this.floorsList);
+        listScrollPane.setPreferredSize(new Dimension(150, 100));
+        floorListPanel.add(listScrollPane);
+        this.floorsList.addListSelectionListener(this);
+        
+        final JPanel buttonPanel = new JPanel();
+        final JButton btnAddFloor = new JButton("ADD");
+        btnAddFloor.addActionListener(this);
+        buttonPanel.add(btnAddFloor);
+        
+        final JButton btnRemoveFloor = new JButton("REMOVE");
+        btnRemoveFloor.addActionListener(this);
+        buttonPanel.add(btnRemoveFloor);
+        
+        floorListPanel.add(buttonPanel, "South");
+        this.add((Component)floorListPanel, (Object)"West");
+        
+        add((Component)this.floorView);
+    }
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Command command = Command.fromString(e.getActionCommand());
 		System.out.println("EditFloorPanel.actionPerformed():"+command.toString());
-
 	}
+	
+	@Override
+	public void valueChanged(final ListSelectionEvent e) {
+		System.out.println("FloorManagerConfigurationView.valueChanged.by."+e.getSource().getClass().getName());		
+    }
 }
