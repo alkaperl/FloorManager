@@ -28,7 +28,6 @@ public class EditFloorPanel extends JPanel implements ActionListener {
 	public void initializePanel(){
 		setLayout(new BorderLayout(10, 10));
 		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		
 //			browserTable = new JXTable();
 //			browserTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 //			browserTable.getSelectionModel().addListSelectionListener(this);
