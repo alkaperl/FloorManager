@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -25,7 +26,7 @@ public class TableController implements ActionListener, ListSelectionListener {
 		this.tablePanel = new TablePanel( this );		
 	}
 	
-	public TablePanel getTablePanel(){
+	public JPanel getMainPanel(){
 		return tablePanel;
 	}
 	

@@ -19,6 +19,10 @@ public class CongifurationMenuAction extends PosAction {
 	private BackOfficeWindow backOfficeWindow;
 
 	public CongifurationMenuAction(String nm, JPanel panel, BackOfficeWindow backOfficeWindowInstance) {
+		//TODO: optimization: 
+		//      Pass Controller instead of panel: 
+		//      so that Panel is instantiated only if needed
+		//      and not in Configuration Window open
 		super(nm);
 		name = nm;
 		configurationPanel = panel;

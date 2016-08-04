@@ -29,6 +29,7 @@ public class FloorManager implements FloorLayoutPlugin {
 	private TableController tableController;
 	
     public FloorManager() {
+    	System.out.println("Message.TEST_TEXT:"+MessagesConstants.TEST_TEXT);
 		System.out.println("FloorManager.constructor()");    	
     }
 
@@ -67,7 +68,7 @@ public class FloorManager implements FloorLayoutPlugin {
 		BackOfficeWindow backOfficeWindow = POSUtil.getBackOfficeWindow();
 		JMenu floorManagerMenu = new JMenu("Floor Manager");
 		floorManagerMenu.add(new CongifurationMenuAction("1.Floors", 	  new FloorPanel(), 	backOfficeWindow));
-		floorManagerMenu.add(new CongifurationMenuAction("2.Tables", 	  tableController.getTablePanel(), 	backOfficeWindow));
+		floorManagerMenu.add(new CongifurationMenuAction("2.Tables", 	  tableController.getMainPanel(), 	backOfficeWindow));
 		floorManagerMenu.add(new CongifurationMenuAction("3.Table Types", new TableTypePanel(), backOfficeWindow));
 		backOfficeWindow.getBackOfficeMenuBar().remove(backOfficeWindow.getBackOfficeMenuBar().getComponentCount() - 1);
 		backOfficeWindow.getBackOfficeMenuBar().add(floorManagerMenu);
