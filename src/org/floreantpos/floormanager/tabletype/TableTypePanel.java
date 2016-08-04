@@ -89,9 +89,10 @@ public class TableTypePanel extends JPanel implements ActionListener, ListSelect
 		browserTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void refreshTables() {
 		List<ShopTableType> tableTypes = ShopTableTypeDAO.getInstance().findAll();
-		tableModel = (BeanTableModel) browserTable.getModel();
+		tableModel = (BeanTableModel<ShopTableType>) browserTable.getModel();
 		tableModel.removeAll();
 		tableModel.addRows( tableTypes );
 		//beanEditor.setFieldsEnable( false );
@@ -118,14 +119,14 @@ public class TableTypePanel extends JPanel implements ActionListener, ListSelect
 				if (selectedRowId > -1){
 					System.out.println("EditTablePanel.valueChanged():selectedRow.C.if:"+selectedRowId+":");
 
-					//ShopTableType data = (ShopTableType) model.getRow(selectedRowId);
-					//beanEditor.setBean(data);
+					ShopTableType data = (ShopTableType) model.getRow(selectedRowId);
+					beanEditor.setBean(data);
 //		btnNew.setEnabled(true);
 //		btnEdit.setEnabled(true);
 //		btnSave.setEnabled(false);
 //		btnDelete.setEnabled(true);
 //		btnCancel.setEnabled(false);
-					//beanEditor.setFieldsEnable(true);
+					beanEditor.setFieldsEnable(true);
 				}
 			}				
 		}

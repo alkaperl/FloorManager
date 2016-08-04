@@ -183,7 +183,7 @@ public class FloorManager implements FloorLayoutPlugin {
 	}
 
 	@Override
-	public BeanEditor getBeanEditor() {
+	public BeanEditor<?> getBeanEditor() {
 		System.out.println("FloorManager.getBeanEditor()");								
 //		com.floreantpos.table.ShopTableForm
 //		#########################################################################################################

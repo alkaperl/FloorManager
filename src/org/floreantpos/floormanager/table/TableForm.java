@@ -38,7 +38,7 @@ public class TableForm extends BeanEditor<ShopTable> {
 	private FixedLengthTextField tfTableDescription;
 	private IntegerTextField tfTableNo;
 	private FixedLengthTextField tfTableName;
-	private CheckBoxList tableTypeCBoxList;
+	private CheckBoxList<ShopTableType> tableTypeCBoxList;
 	private JPanel statusPanel;
 	private JRadioButton rbFree;
 	private JRadioButton rbDisable;
@@ -51,7 +51,7 @@ public class TableForm extends BeanEditor<ShopTable> {
 		setPreferredSize(new Dimension(600, 800));
 		setLayout(new MigLayout("", "[][grow]", "[][][][][][][][]")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		setBorder(BorderFactory.createTitledBorder(Messages.getString("TABLE.BORDER.TITLE"))); //$NON-NLS-1$
-		tableTypeCBoxList = new CheckBoxList();
+		tableTypeCBoxList = new CheckBoxList<ShopTableType>();
 		tableTypeCBoxList.setModel(ShopTableTypeDAO.getInstance().findAll());
 		JScrollPane tableTypeCheckBoxList = new JScrollPane(tableTypeCBoxList);
 		tableTypeCheckBoxList.setPreferredSize(new Dimension(0, 350));
@@ -129,7 +129,7 @@ public class TableForm extends BeanEditor<ShopTable> {
 		try {
 			if ( updateModel() ){
 				ShopTable table = (ShopTable) getBean();
-				ShopTableDAO.getInstance().saveOrUpdate(table);
+				ShopTableDAO.getInstance().saveOrUpdate( table );
 				updateView();
 				System.out.println("save:END");				
 				result =  true;
@@ -140,23 +140,6 @@ public class TableForm extends BeanEditor<ShopTable> {
 			BOMessageDialog.showError(this, Messages.getString("TABLE.ACTION.SAVE.ERROR")); //$NON-NLS-1$
 		}
 		return result;
-	}
-
-	@Override
-	protected void updateView() {
-		ShopTable table = (ShopTable) getBean();
-		if (table != null) {
-			tableTypeCBoxList.setModel( ShopTableTypeDAO.getInstance().findAll() );
-			tableTypeCBoxList.selectItems(table.getTypes());
-			tfTableNo.setText(String.valueOf(table.getTableNumber()));
-			tfTableName.setText(table.getName());
-			tfTableDescription.setText(table.getDescription());
-			capacityButtonsController.setTableCapacity(String.valueOf(table.getCapacity()));
-			rbFree.setSelected(true);
-			rbDisable.setSelected(table.isDisable());
-			setBorder(BorderFactory.createTitledBorder(Messages.getString("TABLE.BORDER.TITLE3"))); //$NON-NLS-1$
-			System.out.println("updateView:END");				
-		}
 	}
 
 	@Override
@@ -193,6 +176,23 @@ public class TableForm extends BeanEditor<ShopTable> {
 
 		return true;
 	}
+	
+	@Override
+	protected void updateView() {
+		ShopTable table = (ShopTable) getBean();
+		if (table != null) {
+			tableTypeCBoxList.setModel( ShopTableTypeDAO.getInstance().findAll() );
+			tableTypeCBoxList.selectItems( table.getTypes() );
+			tfTableNo.setText( String.valueOf(table.getTableNumber()) );
+			tfTableName.setText( table.getName() );
+			tfTableDescription.setText( table.getDescription() );
+			capacityButtonsController.setTableCapacity( String.valueOf(table.getCapacity()) );
+			rbFree.setSelected( table.isFree() );
+			rbDisable.setSelected( table.isDisable() );
+			setBorder( BorderFactory.createTitledBorder(Messages.getString("TABLE.BORDER.TITLE3")) ); //$NON-NLS-1$
+			System.out.println( "updateView:END" );				
+		}
+	}	
 	
 	@Override
 	public void clearFields() {

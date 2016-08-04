@@ -105,7 +105,8 @@ public class FloorView extends JPanel {
         this.buttonPanel.add(btnAdd);
         final JButton btnRemoveSelectedTables = new JButton("REMOVE SELECTED TABLES");
         btnRemoveSelectedTables.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent e) {
+
+			public void actionPerformed(final ActionEvent e) {
                 try {
                     final List<ShopTable> selectedTables = FloorView.this.getSelectedTables();
                     if (selectedTables.size() > 0) {                     
@@ -113,7 +114,7 @@ public class FloorView extends JPanel {
 	                    if (option != 0) {
 	                        return;
 	                    }
-	                    ShopTableDAO.getInstance().deleteTables((Collection)selectedTables);
+	                    ShopTableDAO.getInstance().deleteTables((Collection<ShopTable>)selectedTables);
 	                    FloorView.this.floor.getTables().removeAll(selectedTables);
 	                    FloorView.this.renderFloor();
                     }
@@ -248,7 +249,7 @@ public class FloorView extends JPanel {
 	            if (tables != null) {
 		            final int option = JOptionPane.showOptionDialog(this, "Are you sure to delete all tables of " + this.floor.getName() + "?", "Confirm", 0, 3, null, null, null);
 		            if (option == 0) {
-			            ShopTableDAO.getInstance().deleteTables((Collection)tables);
+			            ShopTableDAO.getInstance().deleteTables((Collection<ShopTable>)tables);
 			            this.floor.getTables().clear();
 			            this.renderFloor();
 		            }		            

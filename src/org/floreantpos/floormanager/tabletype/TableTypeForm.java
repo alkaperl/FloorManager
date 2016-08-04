@@ -9,15 +9,15 @@ import org.hibernate.StaleObjectStateException;
 
 import com.floreantpos.Messages;
 import com.floreantpos.bo.ui.BOMessageDialog;
-import com.floreantpos.model.ShopTable;
-import com.floreantpos.model.dao.ShopTableDAO;
+import com.floreantpos.model.ShopTableType;
+import com.floreantpos.model.dao.ShopTableTypeDAO;
 import com.floreantpos.model.util.IllegalModelStateException;
 import com.floreantpos.swing.FixedLengthTextField;
 import com.floreantpos.ui.BeanEditor;
 
 import net.miginfocom.swing.MigLayout;
 
-public class TableTypeForm extends BeanEditor<ShopTable> {
+public class TableTypeForm extends BeanEditor<ShopTableType> {
 
 	/**
 	 * 
@@ -88,8 +88,8 @@ public class TableTypeForm extends BeanEditor<ShopTable> {
 		boolean result = false;
 		try {
 			if ( updateModel() ){
-				ShopTable table = (ShopTable) getBean();
-				ShopTableDAO.getInstance().saveOrUpdate(table);
+				ShopTableType table = (ShopTableType) getBean();
+				ShopTableTypeDAO.getInstance().saveOrUpdate(table);
 				updateView();
 				System.out.println("save:END");				
 				result =  true;

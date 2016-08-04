@@ -68,7 +68,7 @@ public class TableController implements ActionListener, ListSelectionListener {
 		System.out.println("EditTablePanel.valueChanged():"+e.getValueIsAdjusting()+":");
 		
 		if ( !e.getValueIsAdjusting()) {
-			BeanTableModel model = (BeanTableModel) tablePanel.browserTable.getModel();
+			BeanTableModel<?> model = (BeanTableModel<?>) tablePanel.browserTable.getModel();
 			tablePanel.selectedRowIndex = tablePanel.browserTable.getSelectedRow();
 			if (tablePanel.selectedRowIndex > -1) {
 				System.out.println("EditTablePanel.valueChanged():selectedRow:"+tablePanel.selectedRowIndex+":");

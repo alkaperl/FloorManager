@@ -105,9 +105,10 @@ public class TablePanel extends JPanel {
 		browserTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void refreshTables() {
 		List<ShopTable> tables = ShopTableDAO.getInstance().findAll();
-		tableModel = (BeanTableModel) browserTable.getModel();
+		tableModel = (BeanTableModel<ShopTable>) browserTable.getModel();
 		tableModel.removeAll();
 		tableModel.addRows( tables );
 		beanEditor.setFieldsEnable( false );
