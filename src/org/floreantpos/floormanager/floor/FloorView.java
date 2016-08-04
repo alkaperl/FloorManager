@@ -42,7 +42,11 @@ import com.floreantpos.ui.dialog.POSMessageDialog;
 import com.floreantpos.util.POSUtil;
 
 public class FloorView extends JPanel {
-    private ShopFloor floor;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private ShopFloor floor;
     private FixedLengthTextField tfFloorName;
     TitlePanel titlePanel;
     private JLayeredPane floorPanel;

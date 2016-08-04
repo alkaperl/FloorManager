@@ -33,7 +33,7 @@ public class TablePanel extends JPanel {
 	protected TableForm beanEditor;
 	protected int selectedRowIndex = -1;
 	protected int selectedRowId = -1;
-	private TableController tableController;
+//	private TableController tableController;
 	//TODO: ADD messages.properties			
 	protected JButton btnDelete = new JButton( "DELETE" ); //$NON-NLS-1$	
 	protected JButton btnReplicate = new JButton( "REPLICATE" ); //$NON-NLS-1$

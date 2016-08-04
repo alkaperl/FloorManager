@@ -6,7 +6,6 @@ import javax.swing.JMenu;
 
 import org.floreantpos.floormanager.floor.FloorPanel;
 import org.floreantpos.floormanager.table.TableController;
-import org.floreantpos.floormanager.table.TablePanel;
 import org.floreantpos.floormanager.tableselector.FloorManagerTableSelector;
 import org.floreantpos.floormanager.tabletype.TableTypePanel;
 
