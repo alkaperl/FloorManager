@@ -13,8 +13,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import org.jdesktop.swingx.JXTable;
+import org.marso.floormanager.Messages;
 
-import com.floreantpos.Messages;
 import com.floreantpos.bo.ui.CustomCellRenderer;
 import com.floreantpos.model.ShopTable;
 import com.floreantpos.model.dao.ShopTableDAO;
@@ -36,7 +36,7 @@ public class TablePanel extends JPanel {
 	private TableController tableController;
 	//TODO: ADD messages.properties			
 	protected JButton btnDelete = new JButton( "DELETE" ); //$NON-NLS-1$	
-	protected JButton btnDuplicate = new JButton( "REPLICATE" ); //$NON-NLS-1$
+	protected JButton btnReplicate = new JButton( "REPLICATE" ); //$NON-NLS-1$
 	protected JButton btnDeleteAll = new JButton( "DELETE ALL" ); //$NON-NLS-1$	
 	protected JButton btnNew = new JButton( "NEW" ); //$NON-NLS-1$		
 	protected JButton btnSave = new JButton( "SAVE" ); //$NON-NLS-1$		
@@ -58,9 +58,9 @@ public class TablePanel extends JPanel {
 		browserTable.setDefaultRenderer(Date.class, new CustomCellRenderer());
 
 		//Pass as a parameter???
-		tableModel.addColumn(Messages.getString("ShopTableBrowser.0"), ShopTable.PROP_ID); //$NON-NLS-1$
-		tableModel.addColumn(Messages.getString("ShopTableBrowser.1"), ShopTable.PROP_CAPACITY); //$NON-NLS-1$
-		tableModel.addColumn(Messages.getString("ShopTableBrowser.2"), ShopTable.PROP_DESCRIPTION); //$NON-NLS-1$
+		tableModel.addColumn(Messages.getString("TABLE.COLUMN.NAME.ID"), ShopTable.PROP_ID); //$NON-NLS-1$
+		tableModel.addColumn(Messages.getString("TABLE.COLUMN.NAME.CAPACITY"), ShopTable.PROP_CAPACITY); //$NON-NLS-1$
+		tableModel.addColumn(Messages.getString("TABLE.COLUMN.NAME.DESCRIPTION"), ShopTable.PROP_DESCRIPTION); //$NON-NLS-1$
 		tableModel.addColumn("Status", ShopTable.PROP_DISABLE); //$NON-NLS-1$
 		browserTable.setModel(tableModel);
 
@@ -69,7 +69,7 @@ public class TablePanel extends JPanel {
 		
 		JPanel buttonPanelLeft = new JPanel();
 		buttonPanelLeft.add(btnDelete);
-		buttonPanelLeft.add(btnDuplicate);
+		buttonPanelLeft.add(btnReplicate);
 		buttonPanelLeft.add(btnDeleteAll);	
 		browserPanel.add(buttonPanelLeft, BorderLayout.SOUTH);
 		add(browserPanel);
@@ -95,7 +95,7 @@ public class TablePanel extends JPanel {
 		btnSave.addActionListener( tableController );
 		btnDelete.addActionListener( tableController );
 		btnCancel.addActionListener( tableController );		
-		btnDuplicate.addActionListener( tableController );
+		btnReplicate.addActionListener( tableController );
 		btnDeleteAll.addActionListener( tableController );			
 
 		beanEditor.clearFields();
