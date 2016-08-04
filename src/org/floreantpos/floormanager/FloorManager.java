@@ -1,14 +1,14 @@
-package org.marso.floormanager;
+package org.floreantpos.floormanager;
 
 import java.util.List;
 
 import javax.swing.JMenu;
 
-import org.marso.floormanager.floor.FloorPanel;
-import org.marso.floormanager.table.TableController;
-import org.marso.floormanager.table.TablePanel;
-import org.marso.floormanager.tableselector.FloorManagerTableSelector;
-import org.marso.floormanager.tabletype.TableTypePanel;
+import org.floreantpos.floormanager.floor.FloorPanel;
+import org.floreantpos.floormanager.table.TableController;
+import org.floreantpos.floormanager.table.TablePanel;
+import org.floreantpos.floormanager.tableselector.FloorManagerTableSelector;
+import org.floreantpos.floormanager.tabletype.TableTypePanel;
 
 import com.floreantpos.actions.PosAction;
 import com.floreantpos.bo.ui.BackOfficeWindow;
@@ -24,13 +24,13 @@ import net.xeoh.plugins.base.annotations.PluginImplementation;
 
 @PluginImplementation
 public class FloorManager implements FloorLayoutPlugin {
-	public static final String NAME = String.valueOf("org.FloorManager".hashCode());
+	public static final String NAME = String.valueOf("org.FloorManager");
 	public static final String ID = String.valueOf(NAME.hashCode());
 	private TableController tableController;
 	
     public FloorManager() {
     	System.out.println("Message.TEST_TEXT:"+MessagesConstants.TEST_TEXT);
-		System.out.println("FloorManager.constructor()");    	
+		System.out.println("FloorManager.constructor()");   
     }
 
 	@Override

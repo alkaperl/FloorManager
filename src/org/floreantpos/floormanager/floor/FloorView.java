@@ -1,4 +1,4 @@
-package org.marso.floormanager.floor;
+package org.floreantpos.floormanager.floor;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

@@ -1,4 +1,4 @@
-package org.marso.floormanager.floor;
+package org.floreantpos.floormanager.floor;
 
 import javax.swing.JToggleButton;
 

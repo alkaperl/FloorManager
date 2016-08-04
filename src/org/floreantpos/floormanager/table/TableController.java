@@ -1,4 +1,4 @@
-package org.marso.floormanager.table;
+package org.floreantpos.floormanager.table;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -15,7 +15,7 @@
  * * All Rights Reserved.
  * ************************************************************************
  */
-package org.marso.floormanager;
+package org.floreantpos.floormanager;
 
 import java.io.IOException;
 import java.io.InputStream;

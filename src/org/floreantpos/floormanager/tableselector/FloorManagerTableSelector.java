@@ -1,4 +1,4 @@
-package org.marso.floormanager.tableselector;
+package org.floreantpos.floormanager.tableselector;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

@@ -1,4 +1,4 @@
-package org.marso.floormanager.table;
+package org.floreantpos.floormanager.table;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -12,8 +12,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
+import org.floreantpos.floormanager.Messages;
 import org.hibernate.StaleObjectStateException;
-import org.marso.floormanager.Messages;
 
 import com.floreantpos.bo.ui.BOMessageDialog;
 import com.floreantpos.model.ShopTable;

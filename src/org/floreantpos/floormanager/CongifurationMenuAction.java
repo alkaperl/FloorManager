@@ -1,4 +1,4 @@
-package org.marso.floormanager;
+package org.floreantpos.floormanager;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -13,7 +13,6 @@ public class CongifurationMenuAction extends PosAction {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	//TODO: put in messages.properties
 	private String name;
 	private JPanel configurationPanel;
 	private BackOfficeWindow backOfficeWindow;
@@ -33,9 +32,9 @@ public class CongifurationMenuAction extends PosAction {
 	public void execute() {
 		System.out.println("EditFloorAction.execute()");
 		JTabbedPane tabbedPane = backOfficeWindow.getTabbedPane();
-		int index = tabbedPane.indexOfTab(name); //$NON-NLS-1$
+		int index = tabbedPane.indexOfTab(name);
 		if (index == -1) {
-			tabbedPane.addTab(name, configurationPanel); //$NON-NLS-1$
+			tabbedPane.addTab(name, configurationPanel);
 		} else {
 			configurationPanel = (JPanel) tabbedPane.getComponentAt(index);
 		}

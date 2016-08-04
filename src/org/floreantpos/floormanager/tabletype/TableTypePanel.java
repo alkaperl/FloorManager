@@ -1,4 +1,4 @@
-package org.marso.floormanager.tabletype;
+package org.floreantpos.floormanager.tabletype;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

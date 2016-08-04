@@ -1,4 +1,4 @@
-package org.marso.floormanager.table;
+package org.floreantpos.floormanager.table;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -12,8 +12,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import org.floreantpos.floormanager.Messages;
 import org.jdesktop.swingx.JXTable;
-import org.marso.floormanager.Messages;
 
 import com.floreantpos.bo.ui.CustomCellRenderer;
 import com.floreantpos.model.ShopTable;
