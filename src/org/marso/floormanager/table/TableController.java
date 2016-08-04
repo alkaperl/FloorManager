@@ -21,8 +21,12 @@ import com.floreantpos.util.POSUtil;
 public class TableController implements ActionListener, ListSelectionListener {
 	private TablePanel tablePanel;
 	
-	public TableController (TablePanel tablePanel){
-		this.tablePanel = tablePanel;		
+	public TableController (){
+		this.tablePanel = new TablePanel( this );		
+	}
+	
+	public TablePanel getTablePanel(){
+		return tablePanel;
 	}
 	
 	public void actionPerformed(ActionEvent e) {		
@@ -85,15 +89,6 @@ public class TableController implements ActionListener, ListSelectionListener {
 				}
 			}				
 		}
-	}
-	
-	public void toggleActionButtons( boolean enable ){
-		tablePanel.btnNew.setEnabled( enable );
-		tablePanel.btnDuplicate.setEnabled( enable );
-		tablePanel.btnSave.setEnabled( enable );
-		tablePanel.btnDelete.setEnabled( enable );
-		tablePanel.btnCancel.setEnabled( enable );
-		//editTablePanel.btnDeleteAll.setEnabled( enable );		
 	}
 	
 	public ShopTable createNew() {

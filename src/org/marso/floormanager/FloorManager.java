@@ -5,6 +5,7 @@ import java.util.List;
 import javax.swing.JMenu;
 
 import org.marso.floormanager.floor.FloorPanel;
+import org.marso.floormanager.table.TableController;
 import org.marso.floormanager.table.TablePanel;
 import org.marso.floormanager.tableselector.FloorManagerTableSelector;
 import org.marso.floormanager.tabletype.TableTypePanel;
@@ -25,6 +26,7 @@ import net.xeoh.plugins.base.annotations.PluginImplementation;
 public class FloorManager implements FloorLayoutPlugin {
 	public static final String NAME = String.valueOf("org.FloorManager".hashCode());
 	public static final String ID = String.valueOf(NAME.hashCode());
+	private TableController tableController;
 	
     public FloorManager() {
 		System.out.println("FloorManager.constructor()");    	
@@ -50,6 +52,8 @@ public class FloorManager implements FloorLayoutPlugin {
 
 	@Override
 	public void initialize() {
+		//Deprecated method
+		init();
 		System.out.println("FloorManager.initialize()");		
 	}	
 
@@ -57,10 +61,13 @@ public class FloorManager implements FloorLayoutPlugin {
 	public void initBackoffice() {
 		System.out.println("FloorManager.initBackoffice()");	
 		// BackOfficeWindow --> createMenus() --> plugin.initBackoffice() 
+		if ( tableController == null ) {
+	    	tableController = new TableController();
+		}
 		BackOfficeWindow backOfficeWindow = POSUtil.getBackOfficeWindow();
 		JMenu floorManagerMenu = new JMenu("Floor Manager");
 		floorManagerMenu.add(new CongifurationMenuAction("1.Floors", 	  new FloorPanel(), 	backOfficeWindow));
-		floorManagerMenu.add(new CongifurationMenuAction("2.Tables", 	  new TablePanel(), 	backOfficeWindow));
+		floorManagerMenu.add(new CongifurationMenuAction("2.Tables", 	  tableController.getTablePanel(), 	backOfficeWindow));
 		floorManagerMenu.add(new CongifurationMenuAction("3.Table Types", new TableTypePanel(), backOfficeWindow));
 		backOfficeWindow.getBackOfficeMenuBar().remove(backOfficeWindow.getBackOfficeMenuBar().getComponentCount() - 1);
 		backOfficeWindow.getBackOfficeMenuBar().add(floorManagerMenu);

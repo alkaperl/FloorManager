@@ -42,14 +42,12 @@ public class TablePanel extends JPanel {
 	protected JButton btnSave = new JButton( "SAVE" ); //$NON-NLS-1$		
 	protected JButton btnCancel = new JButton( "CLEAR CHANGES" ); //$NON-NLS-1$		
 	
-	public TablePanel() {
-		this.setName("EditFloorPanel");
-		initializePanel();
+	public TablePanel(TableController tableController) {
+		this.setName("TablePanel");
+		initializePanel(tableController);
 	}
 	
-	public void initializePanel(){
-		//TODO: Decide who initializes first controller or panel???
-		tableController = new TableController( this );
+	public void initializePanel(TableController tableController){
 		beanEditor = new TableForm( tableController );
 		
 		setLayout(new BorderLayout(10, 10));
@@ -115,5 +113,14 @@ public class TablePanel extends JPanel {
 		beanEditor.setFieldsEnable( false );
 		selectedRowId = -1;
 	}	
+	
+//	public void toggleActionButtons( boolean enable ){
+//		btnNew.setEnabled( enable );
+//		btnDuplicate.setEnabled( enable );
+//		btnSave.setEnabled( enable );
+//		btnDelete.setEnabled( enable );
+//		btnCancel.setEnabled( enable );
+//		//btnDeleteAll.setEnabled( enable );		
+//	}	
 	
 }

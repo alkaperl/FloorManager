@@ -45,6 +45,7 @@ public class TableForm extends BeanEditor<ShopTable> {
 	private CapacityButtonsController capacityButtonsController;
 
 	public TableForm(TableController tableController) {
+		//TODO:Move Business Logic code to Controller class
 		this.tableController = tableController;
 		
 		setPreferredSize(new Dimension(600, 800));
