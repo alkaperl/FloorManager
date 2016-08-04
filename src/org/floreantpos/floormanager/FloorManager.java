@@ -61,7 +61,7 @@ public class FloorManager implements FloorLayoutPlugin {
 	@Override
 	public void initBackoffice() {
 		System.out.println("FloorManager.initBackoffice()");	
-		// BackOfficeWindow --> createMenus() --> plugin.initBackoffice() 
+		//Called from : BackOfficeWindow --> createMenus() --> plugin.initBackoffice() 
 		if ( tableController == null ) {
 	    	tableController = new TableController();
 		}
@@ -77,6 +77,8 @@ public class FloorManager implements FloorLayoutPlugin {
 	@Override
 	public void initConfigurationView(ConfigurationDialog dialog) {
 		System.out.println("FloorManager.initConfigurationView():WILL NOT BE IMPLEMENTED");
+		//This will not be implemented, because there will be not screen in Admin/Configuration Tabbed Window
+		//But all of them will be in Menu "Floor Manager"
         //dialog.addView((ConfigurationView)new FloorManagerConfigurationView());	
 	}
 
